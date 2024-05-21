@@ -1,18 +1,16 @@
-import { useState } from 'react';
+import { Button } from '@mui/material';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const handleClick = () => {
+    alert('Hello World');
+  };
 
   return (
     <>
       <h1>CareerSync</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <Button variant="contained" color="primary" onClick={handleClick}>
+        Hello World
+      </Button>
     </>
   );
 }
