@@ -1,17 +1,35 @@
-import { Button } from '@mui/material';
+import AddReactionIcon from '@mui/icons-material/AddReaction';
+import XIcon from '@mui/icons-material/X';
+import { Button, Stack } from '@mui/material';
 
 function App() {
-  const handleClick = () => {
-    alert('Hello World');
-  };
+  const buttonLabelArray = [
+    'ホーム',
+    '話題を検索',
+    '通知',
+    'メッセージ',
+    'Grok',
+    'プレミアム',
+    'リスト',
+    'ブックマーク',
+    'コミュニティ',
+    '認証済み組織',
+    'プロフィール',
+    'もっと見る',
+  ];
 
   return (
-    <>
-      <h1>CareerSync</h1>
-      <Button variant="contained" color="primary" onClick={handleClick}>
-        Hello World
-      </Button>
-    </>
+    <Stack
+      sx={{
+        padding: 2,
+      }}
+    >
+      <XIcon />
+      <AddReactionIcon />
+      {buttonLabelArray.map((item) => {
+        return <Button key={item}>{item}</Button>;
+      })}
+    </Stack>
   );
 }
 
