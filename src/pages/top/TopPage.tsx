@@ -6,29 +6,6 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 export const TopPage: FC = () => {
   const router = useNavigate();
 
-  const navigate = [
-    {
-      path: '/',
-      text: 'TopPage',
-    },
-    {
-      path: '/auth',
-      text: 'AuthPage',
-    },
-    {
-      path: '/generate-plans',
-      text: 'GeneratePlansPage',
-    },
-    {
-      path: '/plans',
-      text: 'PlansPage',
-    },
-    {
-      path: '/history',
-      text: 'HistoryPage',
-    },
-  ];
-
   return (
     <Container
       maxWidth="sm"
@@ -39,21 +16,6 @@ export const TopPage: FC = () => {
         padding: '20px',
       }}
     >
-      {/* TopPage
-      {navigate.map((nav) => {
-        return (
-          <Button
-            key={nav.path}
-            variant="contained"
-            onClick={() => {
-              router(nav.path);
-            }}
-          >
-            {nav.text}
-          </Button>
-        );
-      })} */}
-      {/* こっから始めるぜ */}
       <Stack direction="row" spacing={3}>
         <Stack
           justifyContent="space-between"
