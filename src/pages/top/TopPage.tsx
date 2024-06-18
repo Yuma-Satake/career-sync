@@ -1,4 +1,4 @@
-import { Box, Button, Card, Container, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
