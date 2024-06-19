@@ -1,13 +1,18 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import type { Dayjs } from 'dayjs';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HistoryIcon from '@mui/icons-material/History';
+import { useCalenderControl } from './useCalenderControl';
+import { CalenderHeader } from './CalenderHeader';
 
 export const TopPage: FC = () => {
   const router = useNavigate();
+
+  const { nowDate, dateArrayByWeek, addMonth, subtractMonth } = useCalenderControl();
 
   return (
     <Container
@@ -66,7 +71,7 @@ export const TopPage: FC = () => {
             size="large"
             startIcon={<AccountCircleIcon />}
             onClick={() => {
-              router('/auth-page');
+              router('/auth');
             }}
             sx={{
               color: 'black',
@@ -81,7 +86,7 @@ export const TopPage: FC = () => {
             size="large"
             startIcon={<SettingsIcon />}
             onClick={() => {
-              router('/plans-page');
+              router('/plans');
             }}
             sx={{
               color: 'black',
@@ -96,7 +101,7 @@ export const TopPage: FC = () => {
             size="large"
             startIcon={<HistoryIcon />}
             onClick={() => {
-              router('/history-page');
+              router('/history');
             }}
             sx={{
               color: 'black',
@@ -108,6 +113,65 @@ export const TopPage: FC = () => {
           </Button>
         </Stack>
       </Stack>
+
+      <CalenderHeader />
+      <Stack direction="row" justifyContent="space-between">
+        <Button
+          variant="contained"
+          size="large"
+          onClick={subtractMonth}
+          sx={{
+            bgcolor: 'white',
+            color: 'black',
+          }}
+        >
+          ＜
+        </Button>
+
+        <Typography variant="h3">{nowDate.format('MM月')}</Typography>
+
+        <Button
+          variant="contained"
+          size="large"
+          onClick={addMonth}
+          sx={{
+            bgcolor: 'white',
+            color: 'black',
+          }}
+        >
+          ＞
+        </Button>
+      </Stack>
+      {
+        // カレンダーの表示
+
+        dateArrayByWeek.map((week, index) => (
+          <Stack key={index} direction="row">
+            {week.map((date, index2) => (
+              <Stack
+                key={date.format('YYYY-MM-DD')}
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  width: '100%',
+                  height: 'auto',
+                  aspectRatio: '1 / 1',
+                  bgcolor: 'white',
+                  borderBottom: '0.5px solid #666666',
+                  borderRight: '0.5px solid #666666',
+                  borderTop: index === 0 ? '0.5px solid #666666' : 'none',
+                  borderLeft: index2 === 0 ? '0.5px solid #666666' : 'none',
+                  padding: '10px',
+                }}
+              >
+                {date.month() === nowDate.month() ? (
+                  <Typography>{date.format('D')}</Typography>
+                ) : null}
+              </Stack>
+            ))}
+          </Stack>
+        ))
+      }
     </Container>
   );
 };
