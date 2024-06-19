@@ -66,7 +66,7 @@ export const TopPage: FC = () => {
             size="large"
             startIcon={<AccountCircleIcon />}
             onClick={() => {
-              router('/auth-page');
+              router('/auth');
             }}
             sx={{
               color: 'black',
@@ -81,7 +81,7 @@ export const TopPage: FC = () => {
             size="large"
             startIcon={<SettingsIcon />}
             onClick={() => {
-              router('/plans-page');
+              router('/plans');
             }}
             sx={{
               color: 'black',
@@ -96,7 +96,7 @@ export const TopPage: FC = () => {
             size="large"
             startIcon={<HistoryIcon />}
             onClick={() => {
-              router('/history-page');
+              router('/history');
             }}
             sx={{
               color: 'black',
