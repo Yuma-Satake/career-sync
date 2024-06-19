@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import { Stack } from '@mui/system';
 import type { FC } from 'react';
 
@@ -9,14 +9,12 @@ const weekArray = ['日', '月', '火', '水', '木', '金', '土'];
  */
 export const CalenderHeader: FC = () => {
   return (
-    <Grid container justifyContent="center" columns={7}>
+    <Grid container justifyContent="center" columns={7} sx={{ bgcolor: 'white' }}>
       {weekArray.map((item) => {
         return (
           <Grid key={item} item xs={1}>
             <Stack alignItems="center">
-              <Button size="small" sx={{ color: 'white' }}>
-                {item}
-              </Button>
+              <Box sx={{ color: 'black' }}>{item}</Box>
             </Stack>
           </Grid>
         );
