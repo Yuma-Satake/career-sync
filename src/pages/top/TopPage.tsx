@@ -39,11 +39,11 @@ export const TopPage: FC = () => {
         >
           <Box>
             <Typography>日曜日</Typography>
-            <Typography variant="h2">14</Typography>
+            <Typography variant="h3">14</Typography>
           </Box>
           <Button
             variant="contained"
-            size="large"
+            size="medium"
             endIcon={<ExitToAppIcon />}
             onClick={() => {
               router('/generate-plans');
@@ -65,11 +65,11 @@ export const TopPage: FC = () => {
             borderRadius: '10px',
             padding: '20px',
           }}
-          spacing={5}
+          spacing={2}
         >
           <Button
             variant="text"
-            size="large"
+            size="small"
             startIcon={<AccountCircleIcon />}
             onClick={() => {
               router('/auth');
@@ -80,11 +80,11 @@ export const TopPage: FC = () => {
               boxShadow: '3px 3px 10px 0px rgba(0,0,0,0.75)',
             }}
           >
-            アカウント設定
+            アカウント
           </Button>
           <Button
             variant="text"
-            size="large"
+            size="small"
             startIcon={<SettingsIcon />}
             onClick={() => {
               router('/plans');
@@ -95,11 +95,11 @@ export const TopPage: FC = () => {
               boxShadow: '3px 3px 10px 0px rgba(0,0,0,0.75)',
             }}
           >
-            日程時間設定
+            日程時間
           </Button>
           <Button
             variant="text"
-            size="large"
+            size="small"
             startIcon={<HistoryIcon />}
             onClick={() => {
               router('/history');
@@ -110,7 +110,7 @@ export const TopPage: FC = () => {
               boxShadow: '3px 3px 10px 0px rgba(0,0,0,0.75)',
             }}
           >
-            日付生成履歴
+            生成履歴
           </Button>
         </Stack>
       </Stack>
