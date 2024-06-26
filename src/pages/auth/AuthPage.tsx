@@ -2,10 +2,50 @@ import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/mate
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import {
+  getAuth,
+  getRedirectResult,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+} from 'firebase/auth';
+import { app } from '../../lib/firebase';
 
 export const AuthPage: FC = () => {
   const router = useNavigate();
+  const appInstance = app;
 
+  const googlelogin = () => {
+    const provider = new GoogleAuthProvider();
+    provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
+    const auth = getAuth();
+    auth.languageCode = 'it';
+    provider.setCustomParameters({
+      login_hint: 'user@example.com',
+    });
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        if (result === null) return;
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        if (credential === null) return;
+        const token = credential.accessToken;
+
+        if (result === null) return;
+        const user = result.user;
+        console.log(user);
+        console.log(token);
+        if (token !== null) {
+          router('/');
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  };
   return (
     <Container
       maxWidth="sm"
@@ -80,7 +120,7 @@ export const AuthPage: FC = () => {
             startIcon={<img src="google.png" />}
             variant="contained"
             onClick={() => {
-              router('/generate-plans');
+              googlelogin();
             }}
             sx={{
               color: 'black',
