@@ -1,5 +1,5 @@
 import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import {
@@ -10,10 +10,16 @@ import {
   signInWithRedirect,
 } from 'firebase/auth';
 import { app } from '../../lib/firebase';
+import { CalendarType } from './CalendarType';
 
-export const AuthPage: FC = () => {
+type Props = {
+  setCalendar: (calendar: CalendarType) => void;
+};
+
+export const AuthPage: FC<Props> = ({ setCalendar }) => {
   const router = useNavigate();
   const appInstance = app;
+  const [token, setToken] = useState<string>('');
 
   const googlelogin = () => {
     const provider = new GoogleAuthProvider();
@@ -35,9 +41,13 @@ export const AuthPage: FC = () => {
         const user = result.user;
         console.log(user);
         console.log(token);
-        if (token !== null) {
-          router('/');
-        }
+
+        if (!token) return;
+        setToken(token);
+
+        // if (token !== null) {
+        //   router('/');
+        // }
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -46,6 +56,25 @@ export const AuthPage: FC = () => {
         const credential = GoogleAuthProvider.credentialFromError(error);
       });
   };
+
+  // 10秒に1回"https://www.googleapis.com/calendar/v3/calendars/calendarId/events"に対してGETリクエストを送信する
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        'https://www.googleapis.com/calendar/v3/calendars/primary/events',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      setCalendar(data);
+    })();
+  }, [token]);
+
   return (
     <Container
       maxWidth="sm"

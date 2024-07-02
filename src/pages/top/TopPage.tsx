@@ -9,8 +9,13 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useCalenderControl } from './useCalenderControl';
 import { CalenderHeader } from './CalenderHeader';
+import { CalendarType } from '../auth/CalendarType';
 
-export const TopPage: FC = () => {
+type Props = {
+  calendar: CalendarType | null;
+};
+
+export const TopPage: FC<Props> = ({ calendar }) => {
   const router = useNavigate();
 
   const { nowDate, dateArrayByWeek, addMonth, subtractMonth } = useCalenderControl();
@@ -25,6 +30,12 @@ export const TopPage: FC = () => {
         padding: '20px',
       }}
     >
+      {/* カレンダーの1件目の名前と開始時間・終了時間 */}
+      <div>
+        {calendar?.items[0]?.summary}
+        {calendar?.items[0]?.start.dateTime}
+        {calendar?.items[0]?.end.dateTime}
+      </div>
       <Stack direction="row" spacing={3}>
         <Stack
           justifyContent="space-between"
