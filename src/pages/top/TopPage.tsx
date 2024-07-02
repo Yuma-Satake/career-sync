@@ -158,7 +158,7 @@ export const TopPage: FC = () => {
             {week.map((date, index2) => (
               <Stack
                 key={date.format('YYYY-MM-DD')}
-                justifyContent="center"
+                justifyContent="flex-start"
                 alignItems="center"
                 sx={{
                   width: '100%',
@@ -169,12 +169,51 @@ export const TopPage: FC = () => {
                   borderRight: '0.5px solid #666666',
                   borderTop: index === 0 ? '0.5px solid #666666' : 'none',
                   borderLeft: index2 === 0 ? '0.5px solid #666666' : 'none',
-                  padding: '10px',
+                  padding: '1px',
                 }}
               >
                 {date.month() === nowDate.month() ? (
-                  <Typography>{date.format('D')}</Typography>
+                  <Typography
+                    sx={{
+                      color: date.day() === 0 ? 'red' : date.day() === 6 ? 'blue' : 'black',
+                      fontSize: '0.8rem',
+                    }}
+                  >
+                    {date.format('D')}
+                  </Typography>
                 ) : null}
+                <Stack>
+                  <Box
+                    sx={{
+                      bgcolor: 'green',
+                      borderRadius: '3px',
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: '0.55rem',
+                        color: 'white',
+                      }}
+                    >
+                      あいうえお
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      bgcolor: 'red',
+                      borderRadius: '3px',
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: '0.55rem',
+                        color: 'white',
+                      }}
+                    >
+                      予定
+                    </Typography>
+                  </Box>
+                </Stack>
               </Stack>
             ))}
           </Stack>
