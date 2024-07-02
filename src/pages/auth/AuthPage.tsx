@@ -2,19 +2,10 @@ import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/mate
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import {
-  getAuth,
-  getRedirectResult,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithRedirect,
-} from 'firebase/auth';
-import { app } from '../../lib/firebase';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 export const AuthPage: FC = () => {
   const router = useNavigate();
-  const appInstance = app;
-
   const googlelogin = () => {
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
@@ -24,27 +15,20 @@ export const AuthPage: FC = () => {
       login_hint: 'user@example.com',
     });
 
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        if (result === null) return;
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential === null) return;
-        const token = credential.accessToken;
+    signInWithPopup(auth, provider).then((result) => {
+      if (result === null) return;
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (credential === null) return;
+      const token = credential.accessToken;
 
-        if (result === null) return;
-        const user = result.user;
-        console.log(user);
-        console.log(token);
-        if (token !== null) {
-          router('/');
-        }
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-      });
+      if (result === null) return;
+      const user = result.user;
+      console.log(user);
+      console.log(token);
+      if (token !== null) {
+        router('/');
+      }
+    });
   };
   return (
     <Container
