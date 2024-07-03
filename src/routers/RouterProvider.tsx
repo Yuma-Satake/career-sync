@@ -14,7 +14,7 @@ export const RouterProvider: FC = () => {
   const routes = [
     {
       path: '/',
-      element: <TopPage />,
+      element: <TopPage token={token} />,
     },
     {
       path: '/auth',
