@@ -1,5 +1,5 @@
 import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -9,9 +9,28 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useCalenderControl } from './useCalenderControl';
 import { CalenderHeader } from './CalenderHeader';
+import { CalendarEvents } from '../CalenderType';
 
-export const TopPage: FC = () => {
+type Props = {
+  token: string;
+};
+export const TopPage: FC<Props> = ({ token }) => {
   const router = useNavigate();
+  const [_calender, setCalender] = useState<CalendarEvents | null>(null);
+  const fetchCalender = async () => {
+    const url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const newcalenderData = await response.json();
+    setCalender(newcalenderData);
+  };
+  useEffect(() => {
+    fetchCalender();
+  }, [token]);
 
   const { nowDate, dateArrayByWeek, addMonth, subtractMonth } = useCalenderControl();
 

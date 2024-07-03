@@ -168,7 +168,7 @@ type CalendarEvent = {
   eventType: string;
 };
 
-type CalendarEvents = {
+export type CalendarEvents = {
   kind: 'calendar#events';
   etag: string;
   summary: string;

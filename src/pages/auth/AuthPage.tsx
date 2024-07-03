@@ -31,8 +31,6 @@ export const AuthPage: FC<Props> = ({ setUser, setToken }) => {
 
       const token = credential.accessToken;
       const user = result.user;
-      console.log(user);
-      console.log(token);
       setUser(user);
       if (token === undefined) return;
       setToken(token);
