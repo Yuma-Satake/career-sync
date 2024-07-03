@@ -10,8 +10,6 @@ import { User } from 'firebase/auth';
 export const RouterProvider: FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string>('');
-  console.log(user);
-  console.log(token);
 
   const routes = [
     {
