@@ -8,7 +8,7 @@ import { HistoryPage } from '../pages/history/HistoryPage';
 import { User } from 'firebase/auth';
 
 export const RouterProvider: FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [_user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string>('');
 
   const routes = [

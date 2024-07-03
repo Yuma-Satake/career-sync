@@ -16,7 +16,7 @@ type Props = {
 };
 export const TopPage: FC<Props> = ({ token }) => {
   const router = useNavigate();
-  const [calender, setCalender] = useState<CalendarEvents | null>(null);
+  const [_calender, setCalender] = useState<CalendarEvents | null>(null);
   const fetchCalender = async () => {
     const url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
     const response = await fetch(url, {
