@@ -6,7 +6,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
 export const AuthPage: FC = () => {
   const router = useNavigate();
-  const googlelogin = () => {
+
+  const googleLogin = () => {
     const provider = new GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/calendar.readonly');
     const auth = getAuth();
@@ -19,17 +20,18 @@ export const AuthPage: FC = () => {
       if (result === null) return;
       const credential = GoogleAuthProvider.credentialFromResult(result);
       if (credential === null) return;
-      const token = credential.accessToken;
 
-      if (result === null) return;
+      const token = credential.accessToken;
       const user = result.user;
       console.log(user);
       console.log(token);
+
       if (token !== null) {
         router('/');
       }
     });
   };
+
   return (
     <Container
       maxWidth="sm"
@@ -101,10 +103,10 @@ export const AuthPage: FC = () => {
           </Box>
           <Button
             size="small"
-            startIcon={<img src="google.png" />}
+            startIcon={<img src="google.png" alt="google" />}
             variant="contained"
             onClick={() => {
-              googlelogin();
+              googleLogin();
             }}
             sx={{
               color: 'black',
