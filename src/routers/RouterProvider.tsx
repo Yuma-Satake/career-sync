@@ -1,12 +1,18 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { TopPage } from '../pages/top/TopPage';
 import { AuthPage } from '../pages/auth/AuthPage';
 import { GeneratePlansPage } from '../pages/generate-plans/GeneratePlansPage';
 import { PlansPage } from '../pages/plans/PlansPage';
 import { HistoryPage } from '../pages/history/HistoryPage';
+import { User } from 'firebase/auth';
 
 export const RouterProvider: FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string>('');
+  console.log(user);
+  console.log(token);
+
   const routes = [
     {
       path: '/',
@@ -14,7 +20,7 @@ export const RouterProvider: FC = () => {
     },
     {
       path: '/auth',
-      element: <AuthPage />,
+      element: <AuthPage setUser={setUser} setToken={setToken} />,
     },
     {
       path: '/generate-plans',

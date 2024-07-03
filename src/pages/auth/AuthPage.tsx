@@ -1,11 +1,19 @@
 import { Box, Button, Container, IconButton, Stack, Typography } from '@mui/material';
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, User } from 'firebase/auth';
+import { app } from '../../lib/firebase';
 
-export const AuthPage: FC = () => {
+type Props = {
+  setUser: Dispatch<SetStateAction<User | null>>;
+  setToken: Dispatch<SetStateAction<string>>;
+};
+
+export const AuthPage: FC<Props> = ({ setUser, setToken }) => {
   const router = useNavigate();
+  // @ts-ignore
+  const appInstance = app;
 
   const googleLogin = () => {
     const provider = new GoogleAuthProvider();
@@ -25,6 +33,9 @@ export const AuthPage: FC = () => {
       const user = result.user;
       console.log(user);
       console.log(token);
+      setUser(user);
+      if (token === undefined) return;
+      setToken(token);
 
       if (token !== null) {
         router('/');
