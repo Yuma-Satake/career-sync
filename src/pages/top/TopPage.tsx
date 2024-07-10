@@ -16,7 +16,7 @@ type Props = {
 };
 export const TopPage: FC<Props> = ({ token }) => {
   const router = useNavigate();
-  const [_calender, setCalender] = useState<CalendarEvents | null>(null);
+  const [calender, setCalender] = useState<CalendarEvents | null>(null);
   const fetchCalender = async () => {
     const url = 'https://www.googleapis.com/calendar/v3/calendars/primary/events';
     const response = await fetch(url, {
@@ -34,7 +34,7 @@ export const TopPage: FC<Props> = ({ token }) => {
 
   const { nowDate, dateArrayByWeek, addMonth, subtractMonth } = useCalenderControl();
 
-  const calenderData = _calender?.items ?? [];
+  const calenderData = calender?.items ?? [];
 
   return (
     <Container
@@ -231,39 +231,6 @@ export const TopPage: FC<Props> = ({ token }) => {
                     }
                   })
                 }
-
-                {/* <Stack>
-                  <Box
-                    sx={{
-                      bgcolor: 'green',
-                      borderRadius: '3px',
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: '0.55rem',
-                        color: 'white',
-                      }}
-                    >
-                      あいうえお
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      bgcolor: 'red',
-                      borderRadius: '3px',
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: '0.55rem',
-                        color: 'white',
-                      }}
-                    >
-                      予定
-                    </Typography>
-                  </Box>
-                </Stack> */}
               </Stack>
             ))}
           </Stack>
