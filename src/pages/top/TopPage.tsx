@@ -34,6 +34,8 @@ export const TopPage: FC<Props> = ({ token }) => {
 
   const { nowDate, dateArrayByWeek, addMonth, subtractMonth } = useCalenderControl();
 
+  const calenderData = _calender?.items ?? [];
+
   return (
     <Container
       maxWidth="sm"
@@ -201,7 +203,36 @@ export const TopPage: FC<Props> = ({ token }) => {
                     {date.format('D')}
                   </Typography>
                 ) : null}
-                <Stack>
+
+                {
+                  //eventsの日付とカレンダーの日付が一致したら表示
+
+                  calenderData.map((event) => {
+                    const eventDate = event.start?.date ?? event.start?.dateTime;
+                    if (eventDate?.includes(date.format('YYYY-MM-DD'))) {
+                      return (
+                        <Stack
+                          key={event.id}
+                          sx={{
+                            bgcolor: 'green',
+                            borderRadius: '3px',
+                          }}
+                        >
+                          <Typography
+                            sx={{
+                              fontSize: '0.55rem',
+                              color: 'white',
+                            }}
+                          >
+                            {event.summary}
+                          </Typography>
+                        </Stack>
+                      );
+                    }
+                  })
+                }
+
+                {/* <Stack>
                   <Box
                     sx={{
                       bgcolor: 'green',
@@ -232,7 +263,7 @@ export const TopPage: FC<Props> = ({ token }) => {
                       予定
                     </Typography>
                   </Box>
-                </Stack>
+                </Stack> */}
               </Stack>
             ))}
           </Stack>
