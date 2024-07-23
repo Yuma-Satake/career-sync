@@ -31,7 +31,7 @@ export const HistoryPage: FC = () => {
         width: '100%',
         height: '100dvh',
         bgcolor: 'primary.main',
-        padding: '20px',
+        padding: '5px',
       }}
     >
       <IconButton
@@ -46,7 +46,7 @@ export const HistoryPage: FC = () => {
         <Stack
           sx={{
             bgcolor: 'gray',
-            height: '100%',
+            height: '10%',
             width: '100%',
             zIndex: 1,
           }}
@@ -64,7 +64,7 @@ export const HistoryPage: FC = () => {
       <Typography
         fontSize={25}
         sx={{
-          pt: 18,
+          pt: 12,
           color: 'white',
         }}
       >
