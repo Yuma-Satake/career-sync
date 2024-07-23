@@ -176,40 +176,47 @@ export const TopPage: FC<Props> = ({ token }) => {
         // カレンダーの表示
         dateArrayByWeek.map((week, index) => (
           <Stack key={index} direction="row">
-            {week.map((date, index2) => (
-              <Stack
-                key={date.format('YYYY-MM-DD')}
-                justifyContent="flex-start"
-                alignItems="center"
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  aspectRatio: '1 / 1',
-                  bgcolor: 'white',
-                  borderBottom: '0.5px solid #666666',
-                  borderRight: '0.5px solid #666666',
-                  borderTop: index === 0 ? '0.5px solid #666666' : 'none',
-                  borderLeft: index2 === 0 ? '0.5px solid #666666' : 'none',
-                  padding: '1px',
-                }}
-              >
-                {date.month() === nowDate.month() ? (
-                  <Typography
-                    sx={{
-                      color: date.day() === 0 ? 'red' : date.day() === 6 ? 'blue' : 'black',
-                      fontSize: '0.8rem',
-                    }}
-                  >
-                    {date.format('D')}
-                  </Typography>
-                ) : null}
+            {week.map((date, index2) => {
+              const todayEvents = calenderData.filter((event) => {
+                const eventDate = event.start?.date ?? event.start?.dateTime;
+                return eventDate?.includes(date.format('YYYY-MM-DD'));
+              });
 
-                {
-                  //eventsの日付とカレンダーの日付が一致したら表示
+              //todayEventsの中身を2つに制限をかける
+              const limitedEvents = todayEvents.slice(0, 2);
 
-                  calenderData.map((event) => {
-                    const eventDate = event.start?.date ?? event.start?.dateTime;
-                    if (eventDate?.includes(date.format('YYYY-MM-DD'))) {
+              return (
+                <Stack
+                  key={date.format('YYYY-MM-DD')}
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    aspectRatio: '1 / 1',
+                    bgcolor: 'white',
+                    borderBottom: '0.5px solid #666666',
+                    borderRight: '0.5px solid #666666',
+                    borderTop: index === 0 ? '0.5px solid #666666' : 'none',
+                    borderLeft: index2 === 0 ? '0.5px solid #666666' : 'none',
+                    padding: '1px',
+                  }}
+                >
+                  {date.month() === nowDate.month() ? (
+                    <Typography
+                      sx={{
+                        color: date.day() === 0 ? 'red' : date.day() === 6 ? 'blue' : 'black',
+                        fontSize: '0.8rem',
+                      }}
+                    >
+                      {date.format('D')}
+                    </Typography>
+                  ) : null}
+
+                  {
+                    //eventsの日付とカレンダーの日付が一致したら表示
+
+                    limitedEvents.map((event) => {
                       return (
                         <Stack
                           key={event.id}
@@ -228,11 +235,11 @@ export const TopPage: FC<Props> = ({ token }) => {
                           </Typography>
                         </Stack>
                       );
-                    }
-                  })
-                }
-              </Stack>
-            ))}
+                    })
+                  }
+                </Stack>
+              );
+            })}
           </Stack>
         ))
       }
