@@ -103,7 +103,7 @@ export const AuthPage: FC<Props> = ({ setUser, setToken }) => {
               sx={{
                 textAlign: 'center',
                 fontFamily: 'arial',
-                fontSize: '50px',
+                fontSize: '40px',
                 fontWeight: 'bold',
               }}
             >
@@ -112,7 +112,17 @@ export const AuthPage: FC<Props> = ({ setUser, setToken }) => {
           </Box>
           <Button
             size="small"
-            startIcon={<img src="google.png" alt="google" />}
+            startIcon={
+              <img
+                src="google.png"
+                alt="google"
+                style={{
+                  padding: 3,
+                  width: '40px',
+                  height: 'auto',
+                }}
+              />
+            }
             variant="contained"
             onClick={() => {
               googleLogin();
