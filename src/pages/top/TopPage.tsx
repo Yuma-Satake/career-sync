@@ -59,8 +59,8 @@ export const TopPage: FC<Props> = ({ token }) => {
           }}
         >
           <Box>
-            <Typography>日曜日</Typography>
-            <Typography variant="h3">14</Typography>
+            <Typography>水曜日</Typography>
+            <Typography variant="h3">24</Typography>
           </Box>
           <Button
             variant="contained"
