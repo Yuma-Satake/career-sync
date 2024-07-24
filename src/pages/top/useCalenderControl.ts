@@ -1,6 +1,6 @@
-import type { Dayjs } from "dayjs";
-import dayjs from "dayjs";
-import { useState } from "react";
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import { useState } from 'react';
 
 type CalenderControlType = {
   nowDate: Dayjs;
@@ -19,21 +19,21 @@ type CalenderControlType = {
  */
 export const useCalenderControl = (): CalenderControlType => {
   const [MonthPosition, setMonthPosition] = useState<number>(0);
-  const dayObj = dayjs().startOf("month").add(MonthPosition, "month");
+  const dayObj = dayjs().startOf('month').add(MonthPosition, 'month');
   const nowDate = dayObj;
 
   // 当月の最初の日付の曜日（位置 0~6）
-  const firstDatePosition = dayObj.startOf("month").day();
+  const firstDatePosition = dayObj.startOf('month').day();
   // 当月の最後の日付
-  const lastDate = dayObj.endOf("month").date();
+  const lastDate = dayObj.endOf('month').date();
   // 当月の週の数
   const weekCount = Math.ceil((lastDate + firstDatePosition) / 7);
 
   // その月のカレンダーの最初から最後までの日付を配列に格納
   const dateArray = [...(Array(weekCount * 7) as void[])].map((_, index) => {
     return index < firstDatePosition
-      ? dayObj.subtract(firstDatePosition - index, "day")
-      : dayObj.add(index - firstDatePosition, "day");
+      ? dayObj.subtract(firstDatePosition - index, 'day')
+      : dayObj.add(index - firstDatePosition, 'day');
   });
   // 7日ごとに配列に格納する
   const dateArrayByWeek = [...(Array(weekCount) as void[])].map((_, index) => {
