@@ -22,7 +22,7 @@ export const RouterProvider: FC = () => {
     },
     {
       path: '/generate-plans',
-      element: <GeneratePlansPage token={token} />,
+      element: <GeneratePlansPage />,
     },
     {
       path: '/plans',
