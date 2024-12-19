@@ -20,14 +20,14 @@ export type HistoryLogArray = {
 };
 
 export const HistoryPage: FC = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const open = Boolean(anchorEl);
+  // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
   const router = useNavigate();
 
   const [historyLogArray, setHistoryLog] = React.useState<HistoryLogArray | null>(null);
@@ -58,15 +58,6 @@ export const HistoryPage: FC = () => {
       .join('\n');
     copyToClipboard(customMessage + '\n' + allAvailableHours); // クリップボードにコピー
   };
-
-  console.log(historyLogArray?.historyLog);
-  console.log(historyLogArray?.historyLog.reverse());
-
-  const handleScroll = () => {
-    // スクロール時の処理を記述する
-    console.log('スクロールされました');
-  };
-
   return (
     <Container
       maxWidth="sm"
@@ -126,10 +117,7 @@ export const HistoryPage: FC = () => {
         }}
       >
         <Stack direction={'row'} sx={{ width: '100%', borderRadius: '10px', fontSize: '18px' }}>
-          <div
-            onScroll={handleScroll}
-            style={{ overflowY: 'scroll', height: '500px', width: '500px' }}
-          >
+          <div style={{ overflowY: 'scroll', height: '500px', width: '500px' }}>
             <Stack>
               {historyLogArray?.historyLog
                 .slice()
