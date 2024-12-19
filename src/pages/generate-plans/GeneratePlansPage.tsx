@@ -15,6 +15,7 @@ import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import dayjs from 'dayjs';
+import { HistoryLogArray } from '../history/HistoryPage';
 
 // カレンダーイベントの型定義
 type CalendarEvent = {
@@ -140,6 +141,25 @@ export const GeneratePlansPage: FC<Props> = ({ token }) => {
         availableHours.push({ date: date.format('YYYY-MM-DD'), hours: formattedHours }); // 結果を追加
       }
     }
+
+    const item = localStorage.getItem('careery-sync-history');
+    const oldHistory: HistoryLogArray | null = item ? JSON.parse(item) : null;
+
+    if (!oldHistory) {
+      localStorage.setItem(
+        'careery-sync-history',
+        JSON.stringify({
+          historyLog: [{ history: availableHours, memo: customMessage }],
+        })
+      );
+      return;
+    }
+
+    const newHistory: HistoryLogArray = {
+      historyLog: [...oldHistory.historyLog, { history: availableHours, memo: customMessage }],
+    };
+
+    localStorage.setItem('careery-sync-history', JSON.stringify(newHistory));
 
     setAvailableHoursInRange(availableHours); // 最終的な利用可能時間をステートに保存
     setHasGenerated(true); // 候補が生成されたことを記録
