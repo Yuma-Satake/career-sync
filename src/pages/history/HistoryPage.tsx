@@ -1,15 +1,6 @@
 import { FC, useState } from 'react';
 import * as React from 'react';
-import {
-  Button,
-  Menu,
-  MenuItem,
-  Fade,
-  Container,
-  Stack,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Button, Container, Stack, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import dayjs from 'dayjs';
@@ -68,6 +59,14 @@ export const HistoryPage: FC = () => {
     copyToClipboard(customMessage + '\n' + allAvailableHours); // クリップボードにコピー
   };
 
+  console.log(historyLogArray?.historyLog);
+  console.log(historyLogArray?.historyLog.reverse());
+
+  const handleScroll = () => {
+    // スクロール時の処理を記述する
+    console.log('スクロールされました');
+  };
+
   return (
     <Container
       maxWidth="sm"
@@ -108,112 +107,69 @@ export const HistoryPage: FC = () => {
       <Typography
         fontSize={25}
         sx={{
-          pt: 12,
-          color: 'white',
-        }}
-      >
-        年月選択
-      </Typography>
-      <Stack direction="row" spacing={12} alignItems="stretch" sx={{ pt: 2 }}>
-        <Button
-          variant="contained"
-          id="fade-button"
-          aria-controls={open ? 'fade-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-          sx={{
-            backgroundColor: 'white',
-          }}
-        >
-          2023年
-        </Button>
-        <Button
-          variant="contained"
-          id="fade-button"
-          aria-controls={open ? 'fade-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-          sx={{
-            backgroundColor: 'white',
-          }}
-        >
-          6月
-        </Button>
-        <Menu
-          id="fade-menu"
-          MenuListProps={{
-            'aria-labelledby': 'fade-button',
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          TransitionComponent={Fade}
-        >
-          <MenuItem onClick={handleClose}>a</MenuItem>
-          <MenuItem onClick={handleClose}>i</MenuItem>
-          <MenuItem onClick={handleClose}>u</MenuItem>
-        </Menu>
-      </Stack>
-      <Typography
-        fontSize={25}
-        sx={{
-          pt: 3,
+          pt: 15,
           color: 'white',
         }}
       >
         生成履歴
       </Typography>
       <Stack
-        spacing={12}
+        spacing={30}
         alignItems="stretch"
         sx={{
           width: '100%',
-          height: '50dvh',
+          height: '60dvh',
           padding: '20px',
           bgcolor: 'white',
           borderRadius: '10px',
           fontSize: '27px',
         }}
       >
-        2023年 6月
-        <Stack
-          direction={'row'}
-          sx={{ width: '100%', bgcolor: '#C0C0C0', borderRadius: '10px', fontSize: '18px' }}
-        >
-          <Stack>
-            {historyLogArray?.historyLog.map((historyLog) => (
-              <Stack spacing={1}>
-                <Typography variant="h5">{historyLog.memo}</Typography>
-                {historyLog.history.map((item) => {
-                  return (
-                    <Stack>
-                      <Typography>日付：{item.date}</Typography>
-                      <Stack direction="row" spacing={1}>
-                        {item.hours.slice(0, 3).map((hour) => {
-                          return <Typography>{hour} / </Typography>;
-                        })}
-                      </Stack>
-                    </Stack>
-                  );
-                })}
-                <Button
-                  variant="contained"
-                  size="small"
-                  onClick={() => {
-                    copyAllAvailableHours(historyLog);
-                  }}
-                  sx={{
-                    height: '30px',
-                    width: '10%',
-                  }}
-                >
-                  コピー
-                </Button>
-              </Stack>
-            ))}
-          </Stack>
+        <Stack direction={'row'} sx={{ width: '100%', borderRadius: '10px', fontSize: '18px' }}>
+          <div
+            onScroll={handleScroll}
+            style={{ overflowY: 'scroll', height: '500px', width: '500px' }}
+          >
+            <Stack>
+              {historyLogArray?.historyLog
+                .slice()
+                .reverse()
+                .map((historyLog, index) => (
+                  <Stack spacing={1} key={index}>
+                    <Typography variant="h5">
+                      {historyLog.memo}&nbsp;
+                      <Button
+                        variant="contained"
+                        size="small"
+                        onClick={() => {
+                          copyAllAvailableHours(historyLog);
+                        }}
+                        sx={{
+                          height: '30px',
+                          width: '10%',
+                        }}
+                      >
+                        コピー
+                      </Button>
+                    </Typography>
+                    {historyLog.history.map((item) => {
+                      return (
+                        <Stack key={item.date}>
+                          <Typography>日付：{item.date}</Typography>
+                          <Stack direction="row" spacing={1}>
+                            {item.hours.slice(0, 3).map((hour) => {
+                              return <Typography key={hour}>{hour} / </Typography>;
+                            })}
+                            ...
+                          </Stack>
+                        </Stack>
+                      );
+                    })}
+                    <Typography>-----------------------------</Typography>
+                  </Stack>
+                ))}
+            </Stack>
+          </div>
         </Stack>
       </Stack>
     </Container>
