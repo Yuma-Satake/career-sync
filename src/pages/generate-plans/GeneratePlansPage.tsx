@@ -145,8 +145,6 @@ export const GeneratePlansPage: FC<Props> = ({ token }) => {
     const item = localStorage.getItem('careery-sync-history');
     const oldHistory: HistoryLogArray | null = item ? JSON.parse(item) : null;
 
-    console.log(oldHistory);
-
     if (!oldHistory) {
       localStorage.setItem(
         'careery-sync-history',
@@ -160,8 +158,6 @@ export const GeneratePlansPage: FC<Props> = ({ token }) => {
     const newHistory: HistoryLogArray = {
       historyLog: [...oldHistory.historyLog, { history: availableHours, memo: customMessage }],
     };
-
-    console.log(newHistory);
 
     localStorage.setItem('careery-sync-history', JSON.stringify(newHistory));
 
