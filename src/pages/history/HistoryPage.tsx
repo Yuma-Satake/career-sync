@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import * as React from 'react';
 import {
   Button,
@@ -12,6 +12,21 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import dayjs from 'dayjs';
+
+export type History = {
+  date: string;
+  hours: string[];
+};
+
+export type HistoryLog = {
+  memo: string;
+  history: History[];
+};
+
+export type HistoryLogArray = {
+  historyLog: HistoryLog[];
+};
 
 export const HistoryPage: FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -23,6 +38,38 @@ export const HistoryPage: FC = () => {
     setAnchorEl(null);
   };
   const router = useNavigate();
+
+  const [historyLogArray, setHistoryLog] = React.useState<HistoryLogArray | null>(null);
+
+  React.useEffect(() => {
+    const historyLogData = localStorage.getItem('careery-sync-history');
+    if (!historyLogData) return;
+    const historyLogArray: HistoryLogArray = JSON.parse(historyLogData);
+    setHistoryLog(historyLogArray);
+    console.log(historyLogArray);
+  }, []);
+
+  const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+  // テキストをクリップボードにコピーする関数
+  const [customMessage] = useState<string>(''); // ユーザー入力メッセージ
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('コピーしました'); // コピー成功のアラート
+    });
+    // console.log();
+  };
+  // 全ての利用可能時間をコピーする関数
+  const copyAllAvailableHours = (historyLog: HistoryLog) => {
+    console.log(historyLog);
+    const allAvailableHours = historyLog.history
+      .map(({ date, hours }) => {
+        const dayOfWeekIndex = dayjs(date).day();
+        const dayOfWeek = daysOfWeek[dayOfWeekIndex]; // 曜日を取得
+        return `${dayjs(date).format('YYYY年MM月DD日')} (${dayOfWeek}曜日): ${hours.join(', ')}`;
+      })
+      .join('\n');
+    copyToClipboard(customMessage + '\n' + allAvailableHours); // クリップボードにコピー
+  };
 
   return (
     <Container
@@ -138,7 +185,7 @@ export const HistoryPage: FC = () => {
           direction={'row'}
           sx={{ width: '100%', bgcolor: '#C0C0C0', borderRadius: '10px', fontSize: '18px' }}
         >
-          <Stack
+          {/* <Stack
             sx={{
               width: '60%',
               height: '30dvh',
@@ -170,13 +217,54 @@ export const HistoryPage: FC = () => {
             >
               メモ
             </Stack>
+          </Stack> */}
+          {/* <Stack>
+            {hitoryLogArray2.historyLog.map((history) => {
+              return (
+                <div style={{ borderBottom: '1px solid' }}>
+                  {history.map((str) => {
+                    return <div>{str}</div>;
+                  })}
+                </div>
+              );
+            })}
+          </Stack> */}
+
+          <Stack>
+            {historyLogArray?.historyLog.map((historyLog) => (
+              <Stack spacing={1}>
+                <Typography variant="h5">{historyLog.memo}</Typography>
+                {historyLog.history.map((item) => {
+                  return (
+                    <Stack>
+                      <Typography>日付：{item.date}</Typography>
+                      <Stack direction="row" spacing={1}>
+                        {item.hours.slice(0, 3).map((hour) => {
+                          return <Typography>{hour} / </Typography>;
+                        })}
+                      </Stack>
+                    </Stack>
+                  );
+                })}
+                <Button
+                  variant="contained"
+                  size="small"
+                  // onClick={copyAllAvailableHours(historyLog)} // 利用可能時間をコピー
+                  onClick={() => {
+                    copyAllAvailableHours(historyLog);
+                  }}
+                  sx={{
+                    height: '30px',
+                    width: '10%',
+                  }}
+                >
+                  コピー
+                </Button>
+              </Stack>
+            ))}
           </Stack>
         </Stack>
       </Stack>
     </Container>
   );
 };
-//真ん中に寄せる
-//中身を持ってきて表示
-//グレー薄めて線追加
-//文字のでかさとレイアウト
