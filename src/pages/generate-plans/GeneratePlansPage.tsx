@@ -12,10 +12,10 @@ import {
   Snackbar,
 } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import dayjs from 'dayjs';
-import { History, HistoryLog, HistoryLogArray } from '../history/HistoryPage';
+import { HistoryLogArray } from '../history/HistoryPage';
 
 // カレンダーイベントの型定義
 type CalendarEvent = {
