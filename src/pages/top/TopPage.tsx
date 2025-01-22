@@ -106,21 +106,6 @@ export const TopPage: FC<Props> = ({ token }) => {
           <Button
             variant="text"
             size="small"
-            startIcon={<SettingsIcon />}
-            onClick={() => {
-              router('/plans');
-            }}
-            sx={{
-              color: 'black',
-              // ボタンに影を付ける
-              boxShadow: '3px 3px 10px 0px rgba(0,0,0,0.75)',
-            }}
-          >
-            日程時間
-          </Button>
-          <Button
-            variant="text"
-            size="small"
             startIcon={<HistoryIcon />}
             onClick={() => {
               router('/history');
